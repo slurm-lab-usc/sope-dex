@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Singulate Objects in Packed Environments</title>
+  <link href="res/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="res/css/video-container.css" rel="stylesheet" />
+  <script src="res/js/fa.js"></script>
+  <link rel="icon" type="image/jpeg" href="./res/static/usc_icon.jpg">
+  <style>
+    p {
+      font-size: 18px;
+    }
+
+    .header {
+      width: auto;
+      padding-top: 4rem;
+      padding-bottom: 0rem;
+    }
+
+    .header h1 {
+      font-size: 43px;
+      font-family: 'Helvetica Neue';
+      font-weight: 500;
+      color: #000000c0;
+      line-height: 1.4;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+      margin: 20px 0;
+      padding: 1px;
+      text-align: center;
+    }
+
+    a:link,
+    a:visited {
+      color: #0071bc;
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: #208799;
+    }
+
+    .section-div {
+      height: 3em;
+    }
+
+    .content-div {
+      height: 1em;
+    }
+
+    .no-gutters {
+      margin-right: 0;
+      margin-left: 0;
+    }
+
+    .btn {
+      margin-left: 0.2rem;
+      margin-right: 0.2rem;
+      padding: 0.5rem 1rem;
+    }
+  </style>
+</head>
+
+<div class="header">
+  <center>
+    <h1>
+      Learning to Singulate Objects in Packed <br />
+      Environments using a Dexterous Hand
+    </h1>
+  </center>
+</div>
+
+<center>
+  <a href="https://haojiang4400.github.io/" target="_blank" style="font-size: 18px">Hao Jiang</a><sup
+    style="font-size: 12px">&nbsp</sup>,&nbsp
+  <a href="https://yuhaiw.github.io" target="_blank" style="font-size: 18px">Yuhai Wang</a><sup
+    style="font-size: 12px">&nbsp*</sup>,&nbsp
+  <a href="https://hanyang-zhou.github.io" target="_blank" style="font-size: 18px">Hanyang Zhou</a><sup
+    style="font-size: 12px">&nbsp*</sup>,&nbsp
+  <a href="https://danielseita.github.io/" target="_blank" style="font-size: 18px">Daniel Seita</a><sup
+    style="font-size: 12px">&nbsp</sup>
+</center>
+
+
+<center style="font-size: 18px;">&nbspUniversity of Southern California&nbsp</center>
+
+<div class="content-div"></div>
+<center>
+  <sup style="font-size: 12px">&nbsp*</sup> Equal Contribution
+</center>
+
+<center>
+  International Symposium of Robotics Research (ISRR) 2024
+</center>
+
+<div class="content-div"></div>
+<center>
+  <div class="btn-group" role="group">
+    <a href="https://arxiv.org/abs/2409.00643" target="_blank">
+      <button type="button" class="btn btn-dark">
+        <span class="icon"> <i class="fas fa-file-pdf"></i> Paper </span>
+      </button>
+    </a>
+
+    <a href="https://github.com/Msornerrrr/sope-dex" target="_blank">
+      <button type="button" class="btn btn-dark">
+        <span class="icon"> <i class="fab fa-github"></i> Code </span>
+      </button>
+    </a>
+
+    <a href="https://youtu.be/yLjM2dJnFqU" target="_blank">
+      <button type="button" class="btn btn-dark">
+        <span class="icon"> <i class="fas fa-chalkboard-teacher"></i> Presentation </span>
+      </button>
+    </a>
+
+    <a href="res/static/isrr_2024.pdf" target="_blank">
+      <button type="button" class="btn btn-dark">
+        <span class="icon"> <i class="fas fa-file-powerpoint"></i> Slides </span>
+      </button>
+    </a>
+
+    <!-- <a href="https://www.youtube.com/" target="_blank">
+      <button type="button" class="btn btn-dark">
+        <span class="icon"> <i class="fab fa-youtube"></i> YouTube </span>
+      </button>
+    </a>
+
+    <a href="https://twitter.com/" target="_blank">
+      <button type="button" class="btn btn-dark">
+        <span class="icon"> <i class="fab fa-twitter"></i> Twitter </span>
+      </button>
+    </a> -->
+  </div>
+</center>
+</div>
+<div class="content-div"></div>
+<div class="content-div"></div>
+
+<div class="container">
+  <!--------------------- abstract --------------------->
+  <center>
+    <div class="col">
+      <center>
+        <!-- <iframe width="1120" height="630"
+          src="https://www.youtube.com/embed/dQw4w9WgXcQ?si=w-u0UVNOTzaH88oh&amp;controls=0"
+          title="YouTube video player" frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> -->
+        <video playsinline autoplay loop muted src="videos/main.webm" width="100%" preload="metadata"
+          style="border-radius: 10px"></video>
+      </center>
+    </div>
+  </center>
+  <div style="margin-top: 30px;" class="content-div"></div>
+
+  <center>
+    <h2>Abstract</h2>
+    <div class="content-div"></div>
+    <p style="width: 75%; text-align: justify; white-space: normal">
+      Robotic object singulation, where a robot must isolate, grasp, and retrieve a target object in a cluttered
+      environment, is a fundamental challenge in robotic manipulation.
+      This task is difficult due to occlusions and how other objects act as obstacles for manipulation. A robot must
+      also reason about the effect of object-object interactions as it tries to singulate the target.
+      Prior work has explored object singulation in scenarios where there is enough free space to perform relatively
+      long pushes to separate objects, in contrast to when space is tight and objects have little separation from each
+      other.
+      In this paper, we propose the Singulating Objects in Packed Environments (<strong>SOPE</strong>) framework.
+      We propose a novel method that involves a displacement-based state representation and a multi-phase reinforcement
+      learning procedure that enables singulation using the 16-DOF Allegro Hand.
+      We demonstrate extensive experiments in Isaac Gym simulation, showing the ability of our system to singulate a
+      target object in clutter. We directly transfer the policy trained in simulation to the real world. Over
+      <strong>250</strong>
+      physical robot manipulation trials, our method obtains success rates of <strong>79.2%</strong>, outperforming
+      alternative learning
+      and non-learning methods.
+    </p>
+  </center>
+
+  <center>
+    <div class="section-div"></div>
+    <h2>Overview of SOPE Framework</h2>
+    <img class="img-fluid" src="res/static/method.webp" style="margin-bottom: 20px" width="90%"
+      alt="Overview of SOPE Framework" />
+    <p style="width: 75%; text-align: justify; white-space: normal">
+      Overview of our proposed SOPE framework for object singulation, shown here with the Allegro Hand. The task
+      involves three phases: isolating, grasping, and retrieving. We train a policy in simulation using phase-dependent
+      reward functions. The policy uses the hand joints, the block positions, and the robot arm in the state
+      representation. We directly transfer the trained policy to the real world.
+    </p>
+  </center>
+  <div style="margin-top: 50px;" class="content-div"></div>
+
+  <center>
+    <h2>Physical Environment Setup</h2>
+
+    <p style="width: 80%; text-align: center; white-space: normal">
+      Have a look around our experimental setup. You may zoom in and out and drag to interact with the model.
+    </p>
+    <div id="model-container" style="
+          width: 75%;
+          height: 400px;
+          background-color: white;
+          margin: 20px auto;
+          border-radius: 10px;
+          box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
+            0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        "></div>
+
+    <script type="importmap">
+        {
+          "imports": {
+            "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+            "three/examples/jsm/loaders/GLTFLoader": "https://unpkg.com/three@0.160.0/examples/jsm/loaders/GLTFLoader.js",
+            "three/examples/jsm/controls/OrbitControls": "https://unpkg.com/three@0.160.0/examples/jsm/controls/OrbitControls.js"
+          }
+        }
+      </script>
+    <script type="module">
+      import { initModelViewer } from "./res/js/model-viewer.js";
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const container = document.getElementById("model-container");
+
+        // Set container style
+        container.style.borderRadius = "10px";
+        container.style.overflow = "hidden";
+        container.style.width = "91%";
+
+        initModelViewer(
+          "model-container",
+          "./res/static/3dmodel/sopePhyEnv.gltf"
+        );
+      });
+    </script>
+  </center>
+
+  <div class="section-div"></div>
+
+  <center>
+    <h2>Slow Motion Delight</h2>
+    <p style="width: 80%; text-align: center; white-space: normal">
+      See our robot having a great bounce and block play!
+      <br>
+      View every detail of the robot's playful interaction by enjoying these amazing slow-motion videos.
+    </p>
+  </center>
+  <div class="content-div"></div>
+  <div class="row align-items-center">
+    <div class="col-md-6 align-column-center align-bottom">
+      <center>
+        <video playsinline autoplay loop muted src="videos/slow_version/slow_motion2.webm" width="102%"
+          style="border-radius: 10px"></video>
+      </center>
+    </div>
+    <div class="col-md-6 align-column-center align-bottom">
+      <center>
+        <video playsinline autoplay loop muted src="videos/slow_version/slow_motion.webm" width="102%"
+          style="border-radius: 10px"></video>
+      </center>
+    </div>
+  </div>
+
+  <div style="margin-top: 20px;" class="section-div"></div>
+
+  <center>
+    <h2>Policy Performance Under Different Environments</h2>
+  </center>
+  <div class="content-div"></div>
+  <div class="row align-items-center">
+    <div class="col-md-4 align-column-center">
+      <center>
+        <h5>Three Blocks</h5>
+        <video playsinline autoplay loop muted src="videos/policy_generalization/three.webm" width="105%"
+          style="border-radius: 10px"></video>
+      </center>
+    </div>
+    <div class="col-md-4 align-column-center">
+      <center>
+        <h5>Four Blocks (Normal)</h5>
+        <video playsinline autoplay loop muted src="videos/policy_generalization/four.webm" width="105%"
+          style="border-radius: 10px"></video>
+      </center>
+    </div>
+    <div class="col-md-4 align-column-center">
+      <center>
+        <h5>Four Blocks (Packed)</h5>
+        <video playsinline autoplay loop muted src="videos/policy_generalization/four_packed.webm" width="105%"
+          style="border-radius: 10px"></video>
+      </center>
+    </div>
+  </div>
+
+  <div style="margin-top: 20px;" class="section-div"></div>
+
+  <center>
+    <h2>Policy Performance Under Human Intervention</h2>
+    <p style="width: 80%; text-align: center; white-space: normal">
+      See our hand's robustness as it effectively singulates the block against human intervention.
+      <br>
+      These videos highlight the strength and flexibility of our design.
+    </p>
+  </center>
+  <div class="row align-items-center">
+    <div class="col-md-6 align-column-center">
+      <center>
+        <div class="content-div"></div>
+        <video playsinline autoplay loop muted src="videos/human_intervention/left_view.webm" width="102%"
+          style="border-radius: 10px"></video>
+      </center>
+    </div>
+    <div class="col-md-6 align-column-center">
+      <center>
+        <div class="content-div"></div>
+        <video playsinline autoplay loop muted src="videos/human_intervention/left_view2.webm" width="102%"
+          style="border-radius: 10px"></video>
+      </center>
+    </div>
+    <div class="col-md-6 align-column-center">
+      <center>
+        <div class="content-div"></div>
+        <video playsinline autoplay loop muted src="videos/human_intervention/front_view.webm" width="102%"
+          style="border-radius: 10px"></video>
+      </center>
+    </div>
+    <div class="col-md-6 align-column-center">
+      <center>
+        <div class="content-div"></div>
+        <video playsinline autoplay loop muted src="videos/human_intervention/back_view.webm" width="102%"
+          style="border-radius: 10px"></video>
+      </center>
+    </div>
+  </div>
+
+  <div class="section-div"></div>
+
+  <center>
+    <h2>Videos of All Experiments</h2>
+    <p>
+      To maximize transparency, we provide our full experiment record with videos of all trials in the table below.
+      Check out our Clapperboard system - it helps us keep tabs on every experiment and makes it super easy for you to see what we've been up to.
+    </p>
+    <iframe style="
+          width: 97%;
+          height: 600px;
+          border: none;
+          border-radius: 10px;
+          box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 
+                      0 6px 20px 0 rgba(0, 0, 0, 0.19);
+          margin-top: 20px;
+          overflow: hidden;
+      "
+      src="https://docs.google.com/spreadsheets/d/e/2PACX-1vRlDmzuHq0f0BO3L8g8M358i2YO5ZE51H2hHNiT81iPIkgWpx8vygk2Mu6SKJiQ-MBmJhrErLGC8X4H/pubhtml?gid=0&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
+  </center>
+
+  <div class="section-div"></div>
+
+  <!--------------------- BibTeX --------------------->
+  <div class="content-div"></div>
+  <center>
+    <h2>BibTeX</h2>
+  </center>
+  <pre>
+	  @inproceedings{Hao2024SopeDex,
+	     author = {Hao Jiang and Yuhai Wang and Hanyang Zhou and Daniel Seita},
+	     title = {{Learning to Singulate Objects in Packed Environments using a Dexterous Hand}},
+	     booktitle = {International Symposium on Robotics Research (ISRR)},
+	     year = {2024}
+	   }
+	</pre>
+
+  <!--------------------- Acknowledgement --------------------->
+  <center>
+    <h2>Acknowledgement</h2>
+    <div class="content-div"></div>
+    <p style="width: 75%; text-align: justify; white-space: normal">
+      Website template modified from
+      <a href="https://nerfies.github.io/" target="_blank"> NeRFies</a> and
+      <a href="https://penspin.github.io/" target="_blank">
+        Lessons from Learning to Spin “Pens”</a>.
+    </p>
+    <p style="width: 75%; text-align: justify; white-space: normal">
+      This website is licensed under a
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">
+        Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+    </p>
+    <p style="width: 75%; text-align: justify; white-space: normal">
+      We thank
+      <a href="https://www.chenwangjeremy.net/" target="_blank">Chen Wang</a>,
+      <a href="https://yzqin.github.io/" target="_blank"> Yuzhe Qin</a>,<a href="https://haozhi.io/" target="_blank">
+        Haozhi Qi</a>
+      and
+      <a href="https://binghao-huang.github.io/" target="_blank">Binghao Huang</a>
+      for helpful advice on using the Allegro Hand with Isaac Gym and on
+      setting up the real world experiments.<br />
+      We thank Vedant Raval and Harshitha Rajaprakash for helpful writing
+      feedback.
+    </p>
+  </center>
+
+  <div class="section-div"></div>
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <script src="res/js/bootstrap.min.js"></script>
+</div>
+
+</html>
